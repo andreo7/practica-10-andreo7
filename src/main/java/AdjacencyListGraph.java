@@ -32,6 +32,16 @@ public class AdjacencyListGraph<T extends Comparable<? super T>> implements Grap
     }
 
     /**
+     * @pre v is beetwen 
+     * @post Return the list of adjacents associated whit vertex v. */
+    public List<Integer> adj(int v){
+        if(v<0 || v >= V)
+            throw new IllegalArgumentException();
+        
+        return adj[v];
+    }
+
+    /**
      * @pre V >= 0
      * @post Returns the name of the vertex associated with te integer v. */
     public T nameOf(int v){
