@@ -28,8 +28,4 @@ public interface Graph<T extends Comparable<? super T>> {
      * in this graph. */
     public boolean containsVertex(T v);
 
-    /**
-     * @pre v and w are vertices of the graph.
-     * @post Adds the undirected edge v-w to this graph. */
-    public void addEdge(T v, T w);
 }
