@@ -1,52 +1,51 @@
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
+import java.util.Queue;
 
-public class DepthFirstSearch<T extends Comparable<? super T>> {
+public class BreathFirstSearch<T extends Comparable<? super T>> {
     private boolean[] marked;
     private int count;
-    private T v;
     private AdjacencyListGraph<T> G;
+    private T v;
     List<Integer> recorrido;
 
-    public DepthFirstSearch(AdjacencyListGraph<T> G, T v){
-        this.v = v;
+    public BreathFirstSearch(AdjacencyListGraph<T> G, T v){
         this.G = G;
-        marked = new boolean[G.V()];
+        this.v = v;
         count = 0;
+        marked = new boolean[G.V()];
         recorrido = new LinkedList<>();
-        dfs(this.G, this.G.indexOf(this.v));
+        bfs(G, G.indexOf(v));
     }
 
-    private List<Integer> dfs(AdjacencyListGraph<T> G, int v){
-    Stack<Integer> s = new Stack<>();
-    s.push(v);
-    marked[v] = true;
-    while (!s.isEmpty()) {
-        int x = s.pop();
-        recorrido.add(x);
-        count++;
+    private List<Integer> bfs(AdjacencyListGraph<T> G, int s){
+        Queue<Integer> c = new LinkedList<>();
+        c.add(s);
+        marked[s] = true;
+        while(!c.isEmpty()){
+            int x = c.remove();
+            recorrido.add(x);
+            count++;
 
-        for (int w : G.adj(x)) {
-            if (!marked[w]) {
-                s.push(w);
-                marked[w] = true; 
+            for(int w: G.adj(x)){
+                if(!marked[w])
+                    c.add(w);
+                    marked[w] = true;
             }
         }
-    }
-    return recorrido;
-    }
 
+        return recorrido;
+    }
 
     public int count(){
         return count;
-    }
+    } 
 
     public boolean conexo(){
         return G.V() == count;
     }
 
-    public List<Integer> recorridoCompleto(){
+    public List<Integer> getRecorrido(){
         return recorrido;
     }
 
@@ -66,10 +65,9 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
         G.addEdge("c", "f");
         G.addEdge("c", "g");
 
-        DepthFirstSearch<String> search = new DepthFirstSearch<>(G, "a");
-         System.out.println("Recorrido DFS desde 'a':");
-         for (int i : search.recorridoCompleto()) {
-            System.out.println(G.nameOf(i));
+        BreathFirstSearch<String> search = new BreathFirstSearch<String>(G, "a");
+        for(int v: search.getRecorrido()){
+            System.out.println(G.nameOf(v));
         }
 
         System.out.println("\nCantidad de vértices visitados: " + search.count());
