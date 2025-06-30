@@ -1,18 +1,15 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class EdgeWeightedIntDigraph implements WeightedGraph {
+public class EdgeWeightedIntGraph implements WeightedGraph {
     private int V;
     private int E;
-    private List<DirectedEdge>[] adj;
+    private List<Edge>[] adj;
 
-    public EdgeWeightedIntDigraph(int V){
+    public EdgeWeightedIntGraph(int V){
         this.V = V;
         this.E = 0;
         adj = new LinkedList[V];
-        for(int v = 0; v < V; v++){
-            adj[v] = new LinkedList<>();
-        }
     }
 
     /**
@@ -29,37 +26,37 @@ public class EdgeWeightedIntDigraph implements WeightedGraph {
 
     /**
      * @pre v and w are vertices of the graph.
-     * @post Adds the directed edge v->w to this graph. */
+     * @post Adds the unidirected edge v-w to this graph. */
     public void addEdge(int v, int w, double weight){
         if(v<0 ||v >= V) throw new IllegalArgumentException();
         if(w<0 || w >= V) throw new IllegalArgumentException();
 
-        DirectedEdge wid = new DirectedEdge(v, w, weight); //from: v, to: w.
-        adj[v].add(wid);
-        E++;
+        adj[v].add(new Edge(v, w, weight));
+        adj[w].add(new Edge(w, v, weight));
     }
 
-    /**
+     /**
      * @post return the list of adjayents of vertex v.
      */
-    public List<DirectedEdge> adj(int v){
+    public List<Edge> adj(int v){
         if(v<0 ||v >= V) throw new IllegalArgumentException();
 
         return adj[v];
     }
-
+    
     /**
      * @post return the list of all edges of this graph.
      */
-    public List<DirectedEdge> edges(){
-        List<DirectedEdge> edges = new LinkedList<>();
+    public List<Edge> edges(){
+        List<Edge> edges = new LinkedList<>();
         for(int v = 0; v<V; v++){
-            for(DirectedEdge e: adj(v)){
-                edges.add(e);
+            for(Edge e: adj(v)){
+                int w = e.other(v);
+                if(v < w)
+                    edges.add(e);
             }
         }
 
         return edges;
     }
 }
-

@@ -7,6 +7,7 @@ public class BellmanFord {
         if(s<0 || s>= G.V()) 
             throw new IllegalArgumentException();
         
+        //Inicializacion
         this.G = G;
         edgeTo = new DirectedEdge[G.V()];
         distTo = new double[G.V()];
@@ -20,14 +21,14 @@ public class BellmanFord {
     }
 
     private boolean bellmanFord(EdgeWeightedIntDigraph G, int v){
-        distTo[v] = 0;
         for(int j = 1; j<G.V(); j++){
-            for(DirectedEdge e: G.allEdges()){
+            for(DirectedEdge e: G.edges()){
                 relax(e);
             }
         }
 
-        for(DirectedEdge e: G.allEdges()){
+        //Si luego de hallar el camino mas corto aun podemos relajar una arista hay un ciclo negativo.
+        for(DirectedEdge e: G.edges()){
             int k = e.from; int w = e.to;
             if(distTo[w] > distTo[k] + e.weight)
                 return false;
