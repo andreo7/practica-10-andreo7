@@ -33,11 +33,13 @@ public class Prim {
         
         while(!pq.isEmpty()){
             int currentVer = pq.delMin();
-            marked[currentVer] = true;
+            marked[currentVer] = true; //Marcamos el vertice ya visitado.
 
             for(UndirectedEdge e: G.adj(currentVer)){
+                //Iteramos sobre cada adyacente al vertice visitado.
                 int w = e.other(currentVer);
                 if(!marked[w]){
+                    //Si no fue visitado aun vemos si podemos actualizar su peso.
                     actualizar(e);
                 }
                 

@@ -22,6 +22,7 @@ public class BellmanFord {
 
     private boolean bellmanFord(EdgeWeightedIntDigraph G, int v){
         for(int j = 1; j<G.V(); j++){
+            //En cada iteracion se relajan todas las aristas alcanzables V-1 veces.
             for(DirectedEdge e: G.edges()){
                 relax(e);
             }
