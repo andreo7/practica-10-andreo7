@@ -1,4 +1,4 @@
-public class DirectedEdge implements Edge {
+public class DirectedEdge implements Comparable<DirectedEdge>, Edge {
     final int from;
     final int to;
     final double weight;
@@ -19,5 +19,11 @@ public class DirectedEdge implements Edge {
 
     public double weight(){
         return weight;
+    }
+
+    // Para poder comparar aristas por peso
+    @Override
+    public int compareTo(DirectedEdge that) {
+        return Double.compare(this.weight, that.weight);
     }
 }

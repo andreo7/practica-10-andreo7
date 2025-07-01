@@ -21,6 +21,7 @@ public class BreathFirstSearch{
         Queue<Integer> c = new LinkedList<>();
         c.add(s);
         marked[s] = true;
+        
         while(!c.isEmpty()){
             int x = c.remove();
             recorrido.add(x);

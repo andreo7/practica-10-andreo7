@@ -21,6 +21,7 @@ public class DepthFirstSearch {
     Stack<Integer> s = new Stack<>();
     s.push(v);
     marked[v] = true;
+    
     while (!s.isEmpty()) {
         int x = s.pop();
         recorrido.add(x);
