@@ -2,14 +2,14 @@
 public class Prim {
     private EdgeWeightedIntGraph G;
     private double[] distTo;
-    private Edge[] edgeTo;
+    private UndirectedEdge[] edgeTo;
     private boolean[] marked;
     private IndexMinPQ<Double> pq;
 
     public Prim(EdgeWeightedIntGraph G, int s){
         this.G = G;
         distTo = new double[G.V()];
-        edgeTo = new Edge[G.V()];
+        edgeTo = new UndirectedEdge[G.V()];
         marked = new boolean[G.V()];
         pq = new IndexMinPQ<>(G.V());
 
@@ -35,7 +35,7 @@ public class Prim {
             int currentVer = pq.delMin();
             marked[currentVer] = true;
 
-            for(Edge e: G.adj(currentVer)){
+            for(UndirectedEdge e: G.adj(currentVer)){
                 int w = e.other(currentVer);
                 if(!marked[w]){
                     actualizar(e);
@@ -48,7 +48,7 @@ public class Prim {
     /**
      * @post actualiza la distancia de un vertice en el caso que se encuentre una adyacencia con mejor peso
      */
-    private void actualizar(Edge e){
+    private void actualizar(UndirectedEdge e){
         int v = e.either(); int w = e.other(v);
         if(distTo[w] > e.weight()){
             distTo[w] = e.weight();
@@ -63,7 +63,7 @@ public class Prim {
      */
     private int MST(){
         int weight = 0;
-        for(Edge e: edgeTo){
+        for(UndirectedEdge e: edgeTo){
             if(e != null)
                 weight += e.weight();
         }

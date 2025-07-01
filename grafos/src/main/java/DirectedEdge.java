@@ -1,4 +1,4 @@
-public class DirectedEdge {
+public class DirectedEdge implements Edge {
     final int from;
     final int to;
     final double weight;

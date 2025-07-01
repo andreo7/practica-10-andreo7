@@ -4,7 +4,7 @@ import java.util.TreeSet;
 
 public class Kruskal {
     private EdgeWeightedIntGraph G;
-    private Set<Edge> mst;
+    private Set<UndirectedEdge> mst;
     private int weight;
 
     public Kruskal(EdgeWeightedIntGraph G){
@@ -16,16 +16,16 @@ public class Kruskal {
     }
 
     private void algoritmoKruskal(EdgeWeightedIntGraph G){
-        Edge[] edges = new Edge[G.V()];
+        UndirectedEdge[] edges = new UndirectedEdge[G.V()];
         int j = 0;
-        for(Edge e: G.edges()){
+        for(UndirectedEdge e: G.edges()){
             edges[j++] = e;
         }
         
         Arrays.sort(edges);
         UF uf = new UF(G.V());
         for(int i = 0; i<G.V() && mst.size() < G.E() - 1; i++){
-            Edge e = edges[i];
+            UndirectedEdge e = edges[i];
             int v = e.either();
             int w = e.other(v);
             if(uf.find(v) != uf.find(w)){

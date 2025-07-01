@@ -2,23 +2,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class BreathFirstSearch<T extends Comparable<? super T>> {
+public class BreathFirstSearch{
     private boolean[] marked;
     private int count;
-    private AdjacencyListGraph<T> G;
-    private T v;
+    private Graph G;
     List<Integer> recorrido;
 
-    public BreathFirstSearch(AdjacencyListGraph<T> G, T v){
+    //Como los grafos dirigidos y no dirigidos implementan de graph podemos pasar como parametro cualquiera de los dos
+    public BreathFirstSearch(AdjacencyListIntDigraph G, int v){
         this.G = G;
-        this.v = v;
         count = 0;
         marked = new boolean[G.V()];
         recorrido = new LinkedList<>();
-        bfs(G, G.indexOf(v));
+        bfs(G, v);
     }
 
-    private List<Integer> bfs(AdjacencyListGraph<T> G, int s){
+    private List<Integer> bfs(AdjacencyListIntDigraph G, int s){
         Queue<Integer> c = new LinkedList<>();
         c.add(s);
         marked[s] = true;
@@ -50,24 +49,26 @@ public class BreathFirstSearch<T extends Comparable<? super T>> {
     }
 
     public static void main(String[] args){
-        AdjacencyListGraph<String> G = new AdjacencyListGraph<>(7);
-        G.addVertex("a"); //0
-        G.addVertex("b"); //1
-        G.addVertex("c"); //2
-        G.addVertex("d"); //3
-        G.addVertex("e"); //4
-        G.addVertex("f"); //5
-        G.addVertex("g"); //6
-        G.addEdge("a", "b");
-        G.addEdge("a", "c");
-        G.addEdge("b", "d");
-        G.addEdge("b", "e");
-        G.addEdge("c", "f");
-        G.addEdge("c", "g");
+        AdjacencyListIntDigraph G = new AdjacencyListIntDigraph(6);
+        G.addEdge(0, 1);
+        G.addEdge(0, 3);
+        G.addEdge(0, 4);
+        G.addEdge(1, 3);
+        G.addEdge(2, 0);
+        G.addEdge(2, 3);
+        G.addEdge(2, 5);
+        G.addEdge(3, 0);
+        G.addEdge(3, 1);
+        G.addEdge(3, 2);
+        G.addEdge(3, 4);
+        G.addEdge(3, 5);
+        G.addEdge(4, 1);
+        G.addEdge(4, 5);
 
-        BreathFirstSearch<String> search = new BreathFirstSearch<String>(G, "a");
-        for(int v: search.getRecorrido()){
-            System.out.println(G.nameOf(v));
+        BreathFirstSearch search = new BreathFirstSearch(G, 0);
+         System.out.println("Recorrido DFS desde 'a':");
+         for (int i : search.getRecorrido()) {
+            System.out.println(i);
         }
 
         System.out.println("\nCantidad de vértices visitados: " + search.count());

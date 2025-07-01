@@ -4,7 +4,7 @@ import java.util.List;
 public class EdgeWeightedIntGraph implements WeightedGraph {
     private int V;
     private int E;
-    private List<Edge>[] adj;
+    private List<UndirectedEdge>[] adj;
 
     public EdgeWeightedIntGraph(int V){
         this.V = V;
@@ -31,14 +31,14 @@ public class EdgeWeightedIntGraph implements WeightedGraph {
         if(v<0 ||v >= V) throw new IllegalArgumentException();
         if(w<0 || w >= V) throw new IllegalArgumentException();
 
-        adj[v].add(new Edge(v, w, weight));
-        adj[w].add(new Edge(w, v, weight));
+        adj[v].add(new UndirectedEdge(v, w, weight));
+        adj[w].add(new UndirectedEdge(w, v, weight));
     }
 
      /**
      * @post return the list of adjayents of vertex v.
      */
-    public List<Edge> adj(int v){
+    public List<UndirectedEdge> adj(int v){
         if(v<0 ||v >= V) throw new IllegalArgumentException();
 
         return adj[v];
@@ -47,10 +47,10 @@ public class EdgeWeightedIntGraph implements WeightedGraph {
     /**
      * @post return the list of all edges of this graph.
      */
-    public List<Edge> edges(){
-        List<Edge> edges = new LinkedList<>();
+    public List<UndirectedEdge> edges(){
+        List<UndirectedEdge> edges = new LinkedList<>();
         for(int v = 0; v<V; v++){
-            for(Edge e: adj(v)){
+            for(UndirectedEdge e: adj(v)){
                 int w = e.other(v);
                 if(v < w)
                     edges.add(e);
