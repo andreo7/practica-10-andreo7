@@ -1,9 +1,9 @@
-public class FloydWarshall {
-    private EdgeWeightedIntDigraph G;
+public class FloydWarshall<T extends Comparable<? super T>> {
+    private EdgeWeightedIntDigraph<T> G;
     private double[][] distTo;
     private DirectedEdge[][] edgeTo;
 
-    public FloydWarshall(EdgeWeightedIntDigraph G){
+    public FloydWarshall(EdgeWeightedIntDigraph<T> G){
         this.G = G;
         distTo = new double[G.V()][G.V()];
         edgeTo = new DirectedEdge[G.V()][G.V()];

@@ -1,26 +1,26 @@
 
-public class Prim {
-    private EdgeWeightedIntGraph G;
+public class Prim<T extends Comparable<? super T>> {
+    private EdgeWeightedIntGraph<T> G;
     private double[] distTo;
     private Edge[] edgeTo;
     private boolean[] marked;
     private IndexMinPQ<Double> pq;
 
-    public Prim(EdgeWeightedIntGraph G, int s){
+    public Prim(EdgeWeightedIntGraph<T> G, T s){
         this.G = G;
         distTo = new double[G.V()];
         edgeTo = new Edge[G.V()];
         marked = new boolean[G.V()];
         pq = new IndexMinPQ<>(G.V());
 
-        algoritmoPrim(G, s);
+        algoritmoPrim(G, G.indexOf(s));
         MST();
     }
 
     /**
      * @post almacena en edgeTo y distTo el recorrido hecho por prim usando las aristas de peso minimo.
      */
-    private void algoritmoPrim(EdgeWeightedIntGraph G, int v){
+    private void algoritmoPrim(EdgeWeightedIntGraph<T> G, int v){
         //Inicializacion de la cola de prioridad.
         for(int w = 0; w < G.V(); w++){
             if(w != v)

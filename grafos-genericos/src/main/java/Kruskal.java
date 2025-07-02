@@ -2,12 +2,12 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Kruskal {
-    private EdgeWeightedIntGraph G;
+public class Kruskal<T extends Comparable<? super T>> {
+    private EdgeWeightedIntGraph<T> G;
     private Set<Edge> mst;
     private int weight;
 
-    public Kruskal(EdgeWeightedIntGraph G){
+    public Kruskal(EdgeWeightedIntGraph<T> G){
         this.G = G;
         mst = new TreeSet<>();
         weight = 0;
@@ -15,7 +15,7 @@ public class Kruskal {
         algoritmoKruskal(G);
     }
 
-    private void algoritmoKruskal(EdgeWeightedIntGraph G){
+    private void algoritmoKruskal(EdgeWeightedIntGraph<T> G){
         Edge[] edges = new Edge[G.V()];
         int j = 0;
         for(Edge e: G.edges()){

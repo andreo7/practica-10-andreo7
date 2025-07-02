@@ -1,10 +1,10 @@
-public class BellmanFord {
-    private EdgeWeightedIntDigraph G;
+public class BellmanFord<T extends Comparable<? super T>> {
+    private EdgeWeightedIntDigraph<T> G;
     private DirectedEdge[] edgeTo;
     private double[] distTo;
 
-    public BellmanFord(EdgeWeightedIntDigraph G, int s){
-        if(s<0 || s>= G.V()) 
+    public BellmanFord(EdgeWeightedIntDigraph<T> G, T s){
+        if(G.containsVertex(s)) 
             throw new IllegalArgumentException();
         
         //Inicializacion
@@ -12,15 +12,15 @@ public class BellmanFord {
         edgeTo = new DirectedEdge[G.V()];
         distTo = new double[G.V()];
         for(int v = 0; v<G.V(); v++){
-            if(v != s)
+            if(v != G.indexOf(s))
                 distTo[v] = Double.POSITIVE_INFINITY;
         }
-        distTo[s] = 0;
+        distTo[G.indexOf(s)] = 0;
         
-        bellmanFord(G, s);
+        bellmanFord(G, G.indexOf(s));
     }
 
-    private boolean bellmanFord(EdgeWeightedIntDigraph G, int v){
+    private boolean bellmanFord(EdgeWeightedIntDigraph<T> G, int v){
         for(int j = 1; j<G.V(); j++){
             for(DirectedEdge e: G.edges()){
                 relax(e);
